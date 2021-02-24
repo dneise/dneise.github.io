@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+ "https://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="https://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <meta name="author" content="Dominik Neise" />
+  <title>CTA developers seminar - gitlab &amp; gitlabCI</title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <link rel="stylesheet" type="text/css" media="screen, projection, print"
+    href="https://www.w3.org/Talks/Tools/Slidy2/styles/slidy.css" />
+  <script src="https://www.w3.org/Talks/Tools/Slidy2/scripts/slidy.js"
+    charset="utf-8" type="text/javascript"></script>
+</head>
+<body>
+<div class="slide titlepage">
+  <h1 class="title">CTA developers seminar - gitlab &amp; gitlabCI</h1>
+  <p class="author">
+Dominik Neise
+  </p>
+  <p class="date">24.02.2021</p>
+</div>
+<div id="before-we-begin---flipped-classroom" class="slide section level1">
+<h1>Before we begin - Flipped classroom</h1>
+<ul>
+<li>people watch videos in their own good time</li>
+<li>people meet for (rather short?) online meetings to discuss questions</li>
+</ul>
+<p><a href="https://www.youtube.com/watch?v=MJUJ4wbFm_A"><img src="https://img.youtube.com/vi/MJUJ4wbFm_A/0.jpg" alt="An Introduction to Git and GitHub by Brian Yu" /></a></p>
+</div>
+<div id="what-do-i-get-from-this" class="slide section level1">
+<h1>What do I get from this?</h1>
+<ul>
+<li>How to create a gitlab repo &amp; set it up</li>
+<li>How to setup a CI runner</li>
+<li>A &quot;simple&quot; gitlab-ci file</li>
+</ul>
+</div>
+<div id="introduction-to-gitlab" class="slide section level1">
+<h1>Introduction to GitLab</h1>
+<div class="figure">
+<img src="imgs/gitlab_sign_in.png" alt="gitlab sign in page" />
+<p class="caption">gitlab sign in page</p>
+</div>
+</div>
+<div id="how-to-get-an-account" class="slide section level1">
+<h1>How to get an account?</h1>
+<ul>
+<li><p>getting an account should be <strong>super easy</strong></p></li>
+<li><a href="https://cta.cta-observatory.org/web-registry" class="uri">https://cta.cta-observatory.org/web-registry</a></li>
+<li>... ask your boss for help</li>
+<li><p>use your LDAP account.</p></li>
+</ul>
+</div>
+<div id="how-to-create-a-repository" class="slide section level1">
+<h1>How to create a repository</h1>
+<ul>
+<li>set the visibility to universal.</li>
+<li>add a <code>README.md</code></li>
+<li><p>protect your <code>main</code> branch (Yes, even when you work alone.)</p>
+<p>Settings -&gt; Repository -&gt; Protected Branches</p></li>
+<li><p>add a <code>LICENSE</code> (BSD-3, see next slide)</p></li>
+</ul>
+</div>
+<div id="cta-licensing-policy" class="slide section level1">
+<h1>CTA Licensing Policy</h1>
+<p><a href="https://forge.in2p3.fr/dmsf/files/8629/view" class="uri">https://forge.in2p3.fr/dmsf/files/8629/view</a></p>
+<div class="figure">
+<img src="imgs/cta_licensing_policy_title_page.png" />
+
+</div>
+<p>For IKC:</p>
+<pre><code>Copyright [year] &lt;contributor entity&gt;
+This software was provided as IKC to the Cherenkov Telescope Array Observatory
+This software is distributed under the terms of the BSD-3-Clause license</code></pre>
+</div>
+<div id="interesting-places-to-see" class="slide section level1">
+<h1>Interesting places to see:</h1>
+<ul>
+<li>Issues</li>
+<li>Analytics -&gt; CI/CD</li>
+<li>Analytics -&gt; Repo</li>
+<li>Settings -&gt; Repo -&gt; Protected Branches (we saw already)</li>
+<li>Settings -&gt; CI/CD</li>
+<li>Download as compressed files</li>
+<li>Packages &amp; registries</li>
+<li>Wiki
+<ul>
+<li>personal opinion: Use it carefully, it is easy to miss</li>
+<li>Language is markdown. \o/</li>
+</ul></li>
+<li>Snippets
+<ul>
+<li>maybe a nice place for examples</li>
+<li>not subject to CI tests, so an be full of bugs.</li>
+</ul></li>
+</ul>
+</div>
+<div id="mr-demo" class="slide section level1">
+<h1>MR demo</h1>
+<p>We're doing it live! <a href="https://www.youtube.com/watch?v=vu2NK5REvWM"><img src="https://img.youtube.com/vi/vu2NK5REvWM/0.jpg" /></a></p>
+<ul>
+<li>Draft / WIP</li>
+<li>Describe (unless already done in an issue)</li>
+<li>Delete source branch when merge request is accepted.</li>
+<li>Be nice in a review
+<ul>
+<li>Maybe collaborate instead of just pointing out errors (ask nicely before pushing into other peoples MRs)</li>
+</ul></li>
+<li>Pasting images into issues and basically any text-box just works.</li>
+</ul>
+</div>
+<div id="misc" class="slide section level1">
+<h1>Misc</h1>
+<ul>
+<li>How to setup SSH <a href="https://docs.gitlab.com/ee/ssh/" class="uri">https://docs.gitlab.com/ee/ssh/</a></li>
+<li>How to annotate comments in reviews with the code lines they refer to</li>
+<li>Do not push build artifacts (but maybe auto-generated code)</li>
+<li><p>Users can download, not using git (this affects git-LFS, e.g. ACS)</p></li>
+<li><h2 id="now-to-gitlabci">--&gt; <strong>Now to gitlabCI</strong></h2></li>
+</ul>
+</div>
+<div id="gitlabci" class="slide section level1">
+<h1>gitlabCI</h1>
+<h3 id="why-again">Why again?</h3>
+<p>(what Max said in the last meeting)</p>
+<ul>
+<li>Run build / unit tests / code quality checks automatically</li>
+<li>Should run for each push event / opened pull request (<strong>Premium feature in gitlab</strong>)</li>
+<li>All architectures / versions your software supports should be tested</li>
+<li>Can provide detailed reporting / automated pull request reviews</li>
+<li>Require passing CI system for pull requests</li>
+</ul>
+</div>
+<div id="runners" class="slide section level1">
+<h1>Runners</h1>
+<p><a href="https://www.youtube.com/watch?v=vu2NK5REvWM"><img src="https://img.youtube.com/vi/vu2NK5REvWM/0.jpg" /></a></p>
+<ul>
+<li>install <a href="https://docs.gitlab.com/runner/install/#repositories" class="uri">https://docs.gitlab.com/runner/install/#repositories</a></li>
+<li>register <a href="https://docs.gitlab.com/runner/register/#linux" class="uri">https://docs.gitlab.com/runner/register/#linux</a></li>
+<li>talk about executors: <a href="https://docs.gitlab.com/runner/executors/" class="uri">https://docs.gitlab.com/runner/executors/</a></li>
+</ul>
+</div>
+<div id="the-giblabci-yaml-file" class="slide section level1">
+<h1>The giblabCI YAML file</h1>
+<p><a href="https://www.youtube.com/watch?v=vu2NK5REvWM"><img src="https://img.youtube.com/vi/vu2NK5REvWM/0.jpg" /></a></p>
+<ul>
+<li>ACS Component testing demo <a href="https://gitlab.cta-observatory.org/dneise/acs_example/" class="uri">https://gitlab.cta-observatory.org/dneise/acs_example/</a></li>
+<li>Setup CI for this repo!
+<ul>
+<li>image</li>
+<li>tags</li>
+<li>stages(?)</li>
+<li>artifacts</li>
+</ul></li>
+</ul>
+<p>-&gt; more advanced stuff -&gt; ACADA/STS <a href="https://gitlab.cta-observatory.org/cta-computing/acada/sts/" class="uri">https://gitlab.cta-observatory.org/cta-computing/acada/sts/</a></p>
+</div>
+<div id="misc-1" class="slide section level1">
+<h1>MISC</h1>
+<ul>
+<li><p><a href="https://gitlab.cta-observatory.org/cta-computing/acada/adh/-/ci/editor">CI file web editor</a></p></li>
+<li><p><a href="https://docs.gitlab.com/ee/ci/merge_request_pipelines/pipelines_for_merged_results/">builds for merged reesults are a premium feature</a></p></li>
+<li><p>Auto DevOps</p></li>
+</ul>
+</div>
+</body>
+</html>

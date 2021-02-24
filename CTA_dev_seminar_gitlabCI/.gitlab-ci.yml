@@ -1,0 +1,39 @@
+build-and-test:
+  image: acscommunity/acs:2020.08.0-centos7
+  tags:
+    - docker
+
+  script:
+    - source $ACS_ROOT/ACSSW/config/.acs/.bash_profile.acs
+    - pip install --quiet --upgrade pip
+    - ls -larth
+    - env
+
+    - echo "----------------- BUILD -------------------------------"
+    - pushd ./idl/src && make all install && popd
+    - pip install --quiet -r requirements.txt
+    - pip install .
+
+    - echo "----------------- TEST  -------------------------------"
+    - export ACS_CDB=${PWD}
+    - mkdir -p logs
+    - acsStart > logs/acsStart.log 2>&1
+    - acsStartContainer -b 0 --py pyc > logs/acsStartContainer.log 2>&1  &
+    - sleep 1
+    - pytest tests/
+      --color=yes
+      --verbose
+      -x -s
+      --junitxml=pytest_report.junit.xml
+      --cov=.
+      --cov-report=xml
+      --cov-report=term
+
+
+  artifacts:
+    when: always
+    paths:
+      - "logs"
+    reports:
+      junit: pytest_report.junit.xml
+
